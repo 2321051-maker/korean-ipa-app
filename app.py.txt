@@ -1,0 +1,28 @@
+import streamlit as st
+from g2p import G2p
+
+# ── 한국어 발음 IPA 변환 함수 ────────────────────────
+def convert_to_ipa(text: str):
+    g2p = G2p()
+    ipa_transcription = g2p(text)
+    return ipa_transcription
+
+# ── UI 설정 ───────────────────────────────────────────
+st.markdown("## 한국어 IPA 변환기")
+st.caption("한국어 텍스트를 IPA로 변환합니다.")
+st.divider()
+
+# 텍스트 입력
+text_input = st.text_area(
+    "변환할 텍스트를 입력하세요",
+    placeholder="예시: 안녕하세요! 오늘 날씨가 좋네요.",
+    height=200,
+)
+
+# 변환 버튼
+if st.button("IPA로 변환"):
+    if text_input.strip():
+        ipa_result = convert_to_ipa(text_input)
+        st.markdown(f"### IPA 발음: {ipa_result}")
+    else:
+        st.warning("텍스트를 입력해 주세요.")
